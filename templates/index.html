@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Recommender System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: rgb(7, 7, 7); 
+            color: #fff; 
+            font-family: Arial, sans-serif; 
+            padding-top: 50px; 
+        }
+        .navbar {
+            background-color: #ecebeb; 
+        }
+        .navbar-brand {
+            font-size: 24px; 
+            color: #000 !important;
+        }
+        .navbar-nav > li > a {
+            color: #000 !important;
+        }
+        .jumbotron {
+            background-color: #333; 
+            color: #fff; 
+            text-align: center; 
+            margin-bottom: 20px; /* Adjusted bottom margin */
+            padding: 20px; /* Adjusted padding */
+        }
+        .book-card {
+            background-color: #222; /* Dark background for book cards */
+            color: #fff; /* White text color */
+            margin-top: 30px; /* Top margin for book cards */
+            height: 430px; /* Fixed height to make cards uniform */
+            display: flex; /* Flex display */
+            flex-direction: column; /* Column direction */
+            align-items: center; /* Center align items */
+            justify-content: space-between; /* Space between items */
+            padding: 20px; /* Added padding for better spacing */
+            overflow: hidden; /* Ensure content doesn't overflow */
+        }
+        .book-card img {
+            max-width: 100%; /* Make sure images inside cards are responsive */
+            border-radius: 5px; /* Rounded corners for images */
+            object-fit: cover; /* Cover fit for images */
+            height: 200px; /* Fixed height for images */
+            width: auto; /* Auto width to maintain aspect ratio */
+        }
+        .book-title, .book-author, .book-stats {
+            text-align: center; /* Center align text */
+            overflow: hidden; /* Hide overflow */
+            width: 100%; /* Ensure width is 100% */
+        }
+        .book-title {
+            font-size: 18px; /* Font size for book titles */
+            margin-top: 10px; /* Top margin */
+            white-space: normal; /* Allow wrapping */
+        }
+        .book-author {
+            font-size: 16px; /* Font size for author names */
+            margin-top: 5px; /* Top margin */
+        }
+        .book-stats {
+            font-size: 14px; /* Font size for stats (votes and rating) */
+            margin-top: 5px; /* Top margin */
+        }
+        .image-fallback {
+            height: 200px; /* Fixed height for fallback */
+            width: 100%; /* Ensure width is 100% */
+            display: flex; /* Flex display */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            background-color: #444; /* Dark background for placeholder */
+            border-radius: 5px; /* Rounded corners for placeholder */
+            color: #fff; /* White text color */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand">My Book Recommender</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/recommend">Recommender</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="jumbotron">
+            <h2>50 Popular Books</h2>
+        </div>
+
+        <div class="row">
+            {% for i in range(book_name|length) %}
+                <div class="col-md-3">
+                    <div class="book-card">
+                        {% if image[i] %}
+                            <img src="{{ image[i] }}" alt="{{ book_name[i] }}" class="img-responsive" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'image-fallback\'>Image preview not available</div>');">
+                        {% else %}
+                            <div class="image-fallback">Image preview not available</div>
+                        {% endif %}
+                        <p class="book-title">{{ book_name[i] }}</p>
+                        <p class="book-author">{{ author[i] }}</p>
+                        <p class="book-stats">Votes - {{ votes[i] }}</p>
+                        <p class="book-stats">Rating - {{ rating[i]|round(1) }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
